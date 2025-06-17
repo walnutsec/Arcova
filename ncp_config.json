@@ -1,0 +1,9 @@
+{
+    "key_dir": "ncp_keys",
+    "default_output": "output/ncp_encrypted.txt",
+    "default_aes_key_path": "ncp_keys/aes_key.bin",
+    "default_rsa_public": "ncp_keys/rsa_public.pem",
+    "default_rsa_private": "ncp_keys/rsa_private.pem",
+    "default_x25519_private": "ncp_keys/x25519_private.bin",
+    "default_x25519_public": "ncp_keys/x25519_public.bin"
+}
