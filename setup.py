@@ -1,39 +1,25 @@
-# setup.py (Versi Final dengan Alamat Absolut)
+# setup.py (Versi untuk LINUX)
 
-import sys
-import os
 from setuptools import setup, Extension, find_packages
 
-# Blok ini untuk kompatibilitas g++ di Windows
-if sys.platform == 'win32':
-    import distutils.cygwinccompiler
-    distutils.cygwinccompiler.get_msvcr = lambda: []
-
-# --- INI BAGIAN YANG DIPERBAIKI ---
-# Dapatkan path absolut ke folder utama proyek (tempat setup.py berada)
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-# Buat path absolut ke setiap file source C++
+# Path ke file-file C++ tetap sama relatif terhadap root
 cpp_source_files = [
-    os.path.join(PROJECT_ROOT, "src", "Arcova", "f5_stego", "F5_stego_binding.cpp"),
-    os.path.join(PROJECT_ROOT, "src", "Arcova", "f5_stego", "F5steg.cpp")
+    "src/Arcova/f5_stego/F5_stego_binding.cpp",
+    "src/Arcova/f5_stego/F5steg.cpp"
 ]
-# --- SELESAI PERBAIKAN ---
 
 ext_modules = [
     Extension(
         name="Arcova.f5_stego",
         sources=cpp_source_files,
         include_dirs=[
+            # Path header pybind11 otomatis
             __import__('pybind11').get_include(),
-            # Path ini mungkin perlu disesuaikan jika MSYS2 lu di tempat lain
-            "C:/msys64/ucrt64/include",
-            "C:/msys64/ucrt64/include/openssl"
+            # Di Linux, path lain tidak perlu karena compiler akan mencari di /usr/include
         ],
-        library_dirs=["C:/msys64/ucrt64/lib"],
+        # Library juga akan otomatis ditemukan di /usr/lib
         libraries=["jpeg", "ssl", "crypto"],
-        extra_compile_args=["-std=c++17", "-Wall"],
-        extra_link_args=["-static-libgcc", "-static-libstdc++"],
+        extra_compile_args=["-std=c++17", "-Wall", "-O2", "-fPIC"],
         language="c++"
     )
 ]
