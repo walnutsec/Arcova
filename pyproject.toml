@@ -1,0 +1,29 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0", "pybind11>=2.10"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Arcova"
+version = "1.0.0"
+authors = [
+  { name="N0cturn1s", email="muhammadal241228@contoh.com" },
+]
+description = "Arcova for file encryption and steganography."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Security :: Cryptography",
+]
+dependencies = [
+    "reedsolo",
+    "pycryptodome",
+    "pynacl",
+    "argon2-cffi",
+    "termcolor",
+    "tqdm",
+    # pybind11 udah di-handle sama build-system
+]

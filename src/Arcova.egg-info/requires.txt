@@ -1,0 +1,6 @@
+reedsolo
+pycryptodome
+pynacl
+argon2-cffi
+termcolor
+tqdm

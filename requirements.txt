@@ -1,0 +1,8 @@
+# requirements.txt
+pycryptodome
+pynacl
+argon2-cffi
+reedsolo
+termcolor
+tqdm
+pybind11
