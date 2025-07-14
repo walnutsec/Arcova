@@ -1,36 +1,22 @@
-# setup.py (Versi untuk LINUX)
-
+# setup.py (VERSI FINAL Definitif)
 from setuptools import setup, Extension, find_packages
+import pybind11
 
-# Path ke file-file C++ tetap sama relatif terhadap root
-cpp_source_files = [
-    "src/Arcova/f5_stego/F5_stego_binding.cpp",
-    "src/Arcova/f5_stego/F5steg.cpp"
-]
-
-ext_modules = [
-    Extension(
-        name="Arcova.f5_stego",
-        sources=cpp_source_files,
-        include_dirs=[
-            # Path header pybind11 otomatis
-            __import__('pybind11').get_include(),
-            # Di Linux, path lain tidak perlu karena compiler akan mencari di /usr/include
-        ],
-        # Library juga akan otomatis ditemukan di /usr/lib
-        libraries=["jpeg", "ssl", "crypto"],
-        extra_compile_args=["-std=c++17", "-Wall", "-O2", "-fPIC"],
-        language="c++"
-    )
-]
+f5_stego_module = Extension(
+    name="Arcova.f5_stego",
+    sources=[
+        "Arcova/f5_steg/F5_stego_binding.cpp",
+        "Arcova/f5_steg/F5steg.cpp"
+    ],
+    include_dirs=[
+        pybind11.get_include()
+    ],
+    libraries=["jpeg", "ssl", "crypto"],
+    language="c++"
+)
 
 setup(
-    name="Arcova",
-    version="1.0.0",
-    author="N0cturn1s",
-    description="Arcova Protocol for file encryption and steganography.",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    ext_modules=ext_modules,
-    zip_safe=False,
+    ext_modules=[f5_stego_module],
+    packages=find_packages(),
+    zip_safe=False
 )

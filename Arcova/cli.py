@@ -10,12 +10,11 @@ from Crypto.Random import get_random_bytes
 
 from . import utils
 from . import config
-from . import crypto
-# from . import f5_stego  # Pastikan modul C++ lu bisa diimpor seperti ini
+from . import cryptography as crypto
 
 def display_ascii():
     """Display the main header for Arcova."""
-    header_text = "Arcova Protocol"
+    header_text = "Arcova"
     header_width = len(header_text) + 16
     top_border = "┏" + "━" * (header_width - 2) + "┓"
     bottom_border = "┗" + "━" * (header_width - 2) + "┛"
@@ -25,11 +24,21 @@ def display_ascii():
     print(f"{utils.COLOR_PURPLE}{top_border}{utils.COLOR_RESET}")
     print(f"{utils.COLOR_PURPLE}{header_line}{utils.COLOR_RESET}")
     print(f"{utils.COLOR_PURPLE}{bottom_border}{utils.COLOR_RESET}")
-    print(f"{utils.COLOR_CYAN}=== Arcova Encryption: Advanced ==={utils.COLOR_RESET}")
-    print(f"{utils.COLOR_YELLOW}Coded by: N0cturn1s | Powered by Gemini{utils.COLOR_RESET}")
-    print(f"{utils.COLOR_GREEN}github: https://github.com/whois-tet{utils.COLOR_RESET}")
-    print(f"Version: 1.0 | CTRL+C: Exit")
+    print(f"{utils.COLOR_CYAN}=== Arcova Encryption ==={utils.COLOR_RESET}")
+    print(f"{utils.COLOR_YELLOW}Coded by: walnutsec | Powered by Walnutsec{utils.COLOR_RESET}")
+    print(f"{utils.COLOR_GREEN}github: https://github.com/walnutsec{utils.COLOR_RESET}")
+    print(f"Enjoy  | CTRL+C: Exit")
     print(f"{utils.COLOR_PURPLE}{tagline}{utils.COLOR_RESET}")
+
+def embed_f5_cli(user):
+    print(f"\n{utils.COLOR_CYAN}--- F5 Embed Steganography ---{utils.COLOR_RESET}")
+    print(f"{utils.COLOR_YELLOW}Fitur ini sedang dalam pengembangan!{utils.COLOR_RESET}")
+    input(f"{utils.COLOR_YELLOW}[!] Tekan Enter untuk kembali...{utils.COLOR_RESET}")
+
+def extract_f5_cli(user):
+    print(f"\n{utils.COLOR_CYAN}--- F5 Extract Steganography ---{utils.COLOR_RESET}")
+    print(f"{utils.COLOR_YELLOW}Fitur ini sedang dalam pengembangan!{utils.COLOR_RESET}")
+    input(f"{utils.COLOR_YELLOW}[!] Tekan Enter untuk kembali...{utils.COLOR_RESET}")
 
 
 def interactive_menu(username: str, master_key: bytes) -> bool:
@@ -47,7 +56,7 @@ def interactive_menu(username: str, master_key: bytes) -> bool:
             
             print(f"\n{utils.COLOR_CYAN}Welcome, Operative {username}.{utils.COLOR_RESET}")
             print(f"{utils.COLOR_CYAN}╔════════════════════════════════════╗")
-            print(f"║            ARCOVA MENU           ║")
+            print(f"║            ARCOVA MENU             ║")
             print(f"╠════════════════════════════════════╣")
             print(f"║ 1. Generate Keys (RSA/X25519)      ║")
             print(f"║ 2. Encrypt Text (AES+RSA)          ║")
@@ -55,9 +64,8 @@ def interactive_menu(username: str, master_key: bytes) -> bool:
             print(f"║ 4. Encrypt File (AES+RSA)          ║")
             print(f"║ 5. Decrypt File (AES+RSA)          ║")
             print(f"║ 6. Generate Random AES Key         ║")
-            # Menu 7 dan 8 belum diimplementasikan
-            # print(f"║ 7. Embed Steganography (F5)        ║")
-            # print(f"║ 8. Extract Steganography (F5)      ║")
+            print(f"║ 7. Embed Steganography (F5)        ║")
+            print(f"║ 8. Extract Steganography (F5)      ║")
             print(f"║ 9. Toggle Verbosity                ║")
             print(f"║ 10. Logout                         ║")
             print(f"║ 11. Exit Program                   ║")
@@ -232,8 +240,12 @@ def interactive_menu(username: str, master_key: bytes) -> bool:
                         print(f"{utils.COLOR_GREEN}AES key encrypted and saved to:{utils.COLOR_RESET} {save_path}")
                 input(f"{utils.COLOR_YELLOW}[!] Press Enter to continue...{utils.COLOR_RESET}")
 
+            elif choice == '7':
+                 embed_f5_cli(username)
+            elif choice == '8':
+                 extract_f5_cli(username)
+
             elif choice == '9':
-                VERBOSE = not VERBOSE
                 print(f"{utils.COLOR_GREEN}Verbosity {'enabled' if VERBOSE else 'disabled'}{utils.COLOR_RESET}")
                 time.sleep(1)
 

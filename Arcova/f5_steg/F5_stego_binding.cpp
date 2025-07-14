@@ -1,6 +1,6 @@
+#include "F5steg.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include "F5steg.cpp"
 
 namespace py = pybind11;
 

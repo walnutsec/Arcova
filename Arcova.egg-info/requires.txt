@@ -1,6 +1,7 @@
-reedsolo
 pycryptodome
 pynacl
 argon2-cffi
+reedsolo
 termcolor
 tqdm
+cryptography

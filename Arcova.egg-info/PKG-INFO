@@ -2,15 +2,13 @@ Metadata-Version: 2.4
 Name: Arcova
 Version: 1.0.0
 Summary: Arcova for file encryption and steganography.
-Author-email: N0cturn1s <muhammadal241228@gmail.com>
-Classifier: Programming Language :: Python :: 3
-Classifier: Operating System :: OS Independent
-Classifier: Topic :: Security :: Cryptography
+Author-email: N0cturn1s <muhammadal241228@contoh.com>
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
-Requires-Dist: reedsolo
 Requires-Dist: pycryptodome
 Requires-Dist: pynacl
 Requires-Dist: argon2-cffi
+Requires-Dist: reedsolo
 Requires-Dist: termcolor
 Requires-Dist: tqdm
+Requires-Dist: cryptography

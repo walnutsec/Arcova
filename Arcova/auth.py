@@ -6,10 +6,9 @@ import logging
 from getpass import getpass
 from argon2 import PasswordHasher, exceptions
 
-# Impor dari modul lain di dalam Arcova
 from . import utils
 from . import config
-from . import crypto
+from . import cryptography as crypto
 
 def load_users() -> dict:
     """Load user database from the file specified in config."""
