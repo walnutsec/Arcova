@@ -26,12 +26,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libjpeg-dev libssl-dev
 
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: vcpkg install libjpeg-turbo:x64-windows-static openssl:x64-windows-static --triplet x64-windows-static
+
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
           pip install build
 
       - name: Build wheel
+        env:
+          CMAKE_TOOLCHAIN_FILE: ${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
         run: python -m build
 
       - name: Upload artifacts
