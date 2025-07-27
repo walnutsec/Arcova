@@ -23,7 +23,7 @@ f5_stego_module = Extension(
     library_dirs=[
         vcpkg_library_path
     ],
-    libraries=["jpeg", "ssl", "crypto"],
+    libraries=["jpeg", "libssl", "libcrypto"],
     language="c++"
 )
 
