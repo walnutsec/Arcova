@@ -51,3 +51,10 @@ jobs:
         with:
           name: wheels-${{ matrix.os }}
           path: ./dist
+
+      - name: Check file locations (DEBUG)
+        if: runner.os == 'Windows'
+        run: |
+          echo "--- Content of github.workspace ---"
+          ls -R ${{ github.workspace }}
+        shell: pwsh
