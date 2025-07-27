@@ -26,27 +26,21 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libjpeg-dev libssl-dev
 
+      -  name: Clone vcpkg
+         if: runner.os == 'Windows'
+         run: git clone https://github.com/microsoft/vcpkg.git
+
+      - name: Bootstrap vcpkg
+        if: runner.os == 'Windows'
+        run: .\vcpkg\bootstrap-vcpkg.bat
+
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
-        run: vcpkg install libjpeg-turbo:x64-windows openssl:x64-windows
+        run: .\vcpkg\vcpkg.exe install libjpeg-turbo:x64-windows openssl:x64-windows
 
       - name: Set vcpkg environment variables (Windows)
         if: runner.os == 'Windows'
         run: |
-          echo "INCLUDE=${{ github.workspace }}\\vcpkg_installed\\x64-windows\\include" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "LIB=${{ github.workspace }}\\vcpkg_installed\\x64-windows\\lib" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        shell: pwsh
-
-      - name: Install build tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
-
-      - name: Build wheel
-        run: python -m build
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-${{ matrix.os }}
-          path: ./dist
+         echo "INCLUDE=${{ github.workspace }}\vcpkg\installed\x64-windows\include" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+         echo "LIB=${{ github.workspace }}\vcpkg\installed\x64-windows\lib" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+       shell: pwsh
