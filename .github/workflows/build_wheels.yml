@@ -20,15 +20,18 @@ jobs:
         with:
           python-version: '3.11'
 
+      # ================== BLOK LINUX ==================
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libjpeg-dev libssl-dev
 
+      # ================== BLOK WINDOWS ==================
+      # --- [DIPERBAIKI] Ditambahkan --depth 1 agar clone lebih cepat & stabil ---
       - name: Clone vcpkg
         if: runner.os == 'Windows'
-        run: git clone https://github.com/microsoft/vcpkg.git
+        run: git clone --depth 1 https://github.com/microsoft/vcpkg.git
 
       - name: Bootstrap vcpkg
         if: runner.os == 'Windows'
@@ -47,8 +50,10 @@ jobs:
           echo "LIB=${{ github.workspace }}\vcpkg\installed\x64-windows\lib" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: pwsh
 
+      # ================== LANGKAH BUILD (BERLAKU UNTUK SEMUA OS) ==================
+      # --- [DIPERBAIKI] Ditambahkan 'build' di akhir perintah instalasi ---
       - name: Install Python build tools
-        run: python -m pip install --upgrade pip
+        run: python -m pip install --upgrade pip build
         
       - name: Build wheel
         run: python -m build --wheel
