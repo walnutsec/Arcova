@@ -28,7 +28,14 @@ jobs:
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
-        run: vcpkg install libjpeg-turbo:x64-windows-static openssl:x64-windows-static --triplet x64-windows-static
+        run: vcpkg install libjpeg-turbo:x64-windows openssl:x64-windows
+
+      - name: Set vcpkg environment variables (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo "INCLUDE=${{ github.workspace }}\\vcpkg_installed\\x64-windows\\include" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "LIB=${{ github.workspace }}\\vcpkg_installed\\x64-windows\\lib" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        shell: pwsh
 
       - name: Install build tools
         run: |
@@ -36,8 +43,6 @@ jobs:
           pip install build
 
       - name: Build wheel
-        env:
-          CMAKE_TOOLCHAIN_FILE: ${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
         run: python -m build
 
       - name: Upload artifacts
