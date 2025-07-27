@@ -43,6 +43,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
 
+      - name: Check file locations (DEBUG)
+        if: runner.os == 'Windows'
+        run: |
+          echo "--- Content of github.workspace ---"
+          ls -R ${{ github.workspace }}
+        shell: pwsh
+
       - name: Build wheel
         run: python -m build
 
@@ -51,10 +58,3 @@ jobs:
         with:
           name: wheels-${{ matrix.os }}
           path: ./dist
-
-      - name: Check file locations (DEBUG)
-        if: runner.os == 'Windows'
-        run: |
-          echo "--- Content of github.workspace ---"
-          ls -R ${{ github.workspace }}
-        shell: pwsh
