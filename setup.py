@@ -1,4 +1,4 @@
-# setup.py
+# setup.py 
 import os
 import sys
 from setuptools import setup, Extension
@@ -13,11 +13,9 @@ if sys.platform == 'win32':
     VCPKG_ROOT = os.environ.get("VCPKG_ROOT", ".")
     include_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "include")]
     library_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "lib")]
-    libraries = ["jpeg", "libssl", "libcrypto"]
 else:
     include_dirs = []
     library_dirs = []
-    libraries = ["jpeg", "ssl", "crypto"]
 
 f5_stego_module = Extension(
     name="Arcova.f5_stego",
@@ -27,7 +25,7 @@ f5_stego_module = Extension(
     ],
     include_dirs=[*PYBIND11_INCLUDES, *include_dirs],
     library_dirs=library_dirs,
-    libraries=libraries,
+    libraries=["jpeg"],
     language="c++"
 )
 
