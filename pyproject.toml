@@ -10,7 +10,8 @@ build-backend = "setuptools.build_meta"
 [tool.cibuildwheel]
 skip = "*-musllinux* *-win32* pp*"
 
-before-build-linux = "yum install -y libjpeg-turbo-devel"
+[tool.cibuildwheel.linux]
+before-build = "yum install -y libjpeg-turbo-devel"
 
 [tool.cibuildwheel.windows]
 before-build = "vcpkg install libjpeg-turbo"
