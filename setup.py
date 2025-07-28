@@ -10,9 +10,9 @@ except ImportError:
     PYBIND11_INCLUDES = []
 
 if sys.platform == 'win32':
-    VCPKG_ROOT = os.environ.get("VCPKG_ROOT", ".")
-    include_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "include")]
-    library_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "lib")]
+    DEPS_DIR = "C:\\deps"
+    include_dirs = [os.path.join(DEPS_DIR, "include")]
+    library_dirs = [os.path.join(DEPS_DIR, "lib")]
     libraries = ["jpeg", "libssl", "libcrypto"]
 else:
     include_dirs = []
