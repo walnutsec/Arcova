@@ -1,14 +1,20 @@
-# setup.py (VERSI FINAL YANG PALING BENAR)
+# setup.py 
 import os
+import sys
 from setuptools import setup, Extension
 
 import pybind11
 
-is_in_ci = os.environ.get("CI") == "true"
-VCPKG_ROOT = os.environ.get("GITHUB_WORKSPACE", ".")
+if sys.platform == 'win32':
+    VCPKG_ROOT = os.environ.get("VCPKG_ROOT", ".")
+    include_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "include")]
+    library_dirs = [os.path.join(VCPKG_ROOT, "installed", "x64-windows", "lib")]
+    libraries = ["jpeg", "libssl", "libcrypto"]
+else:
+    include_dirs = []
+    library_dirs = []
+    libraries = ["jpeg", "ssl", "crypto"]
 
-vcpkg_include_path = os.path.join(VCPKG_ROOT, "vcpkg", "installed", "x64-windows", "include") if is_in_ci else ""
-vcpkg_library_path = os.path.join(VCPKG_ROOT, "vcpkg", "installed", "x64-windows", "lib") if is_in_ci else ""
 
 f5_stego_module = Extension(
     name="Arcova.f5_stego",
@@ -18,12 +24,10 @@ f5_stego_module = Extension(
     ],
     include_dirs=[
         pybind11.get_include(),
-        vcpkg_include_path
+        *include_dirs
     ],
-    library_dirs=[
-        vcpkg_library_path
-    ],
-    libraries=["jpeg", "libssl", "libcrypto"],
+    library_dirs=library_dirs,
+    libraries=libraries,
     language="c++"
 )
 
@@ -34,6 +38,5 @@ setup(
     packages=["Arcova", "Arcova.f5_steg"],
     ext_modules=[f5_stego_module],
     zip_safe=False,
-    # Menambahkan dependensi build, bisa membantu
     setup_requires=['pybind11>=2.6', 'setuptools>=42', 'wheel'],
 )
