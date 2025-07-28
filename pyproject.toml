@@ -1,27 +1,16 @@
 # pyproject.toml
-
 [build-system]
-requires = ["setuptools>=61.0", "wheel", "pybind11>=2.12"]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "pybind11>=2.6"
+]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "Arcova"
-version = "1.0.0"
-authors = [
-  { name="N0cturn1s", email="muhammadal241228@contoh.com" },
-]
-description = "Arcova for file encryption and steganography."
-readme = "README.md"
-requires-python = ">=3.8"
-dependencies = [
-    "pycryptodome",
-    "pynacl",
-    "argon2-cffi",
-    "reedsolo",
-    "termcolor",
-    "tqdm",
-    "cryptography",
-]
+[tool.cibuildwheel]
+skip = "*-musllinux* *-win32* pp*"
 
-[project.scripts]
-arcova = "Arcova.__main__:main"
+before-build-linux = "yum install -y libjpeg-turbo-devel"
+
+[tool.cibuildwheel.windows]
+before-build = "vcpkg install libjpeg-turbo"
