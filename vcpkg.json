@@ -2,6 +2,7 @@
   "name": "arcova",
   "version-string": "1.0.0",
   "dependencies": [
-    "libjpeg-turbo"
+    "libjpeg-turbo",
+    "openssl"
   ]
 }
