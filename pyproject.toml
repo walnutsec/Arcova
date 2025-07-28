@@ -12,7 +12,7 @@ build = "cp311-* cp312-*"
 skip = "*-musllinux* *-win32* pp*"
 
 [tool.cibuildwheel.linux]
-before-build = "yum install -y libjpeg-turbo-devel"
+before-build = "yum install -y libjpeg-turbo-devel openssl-devel"
 
 [tool.cibuildwheel.windows]
-before-build = "vcpkg install libjpeg-turbo"
+before-build = "vcpkg install"
