@@ -15,47 +15,32 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: '9827382265f246c24388737279e86333737b678c' 
+          vcpkgArguments: 'libjpeg-turbo openssl'
+          vcpkgTriplet: 'x64-windows'
+      # ======================================================================
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # ================== BLOK LINUX ==================
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libjpeg-dev libssl-dev
 
-      # ================== BLOK WINDOWS ==================
-      # --- [DIPERBAIKI] Ditambahkan --depth 1 agar clone lebih cepat & stabil ---
-      - name: Clone vcpkg
-        if: runner.os == 'Windows'
-        run: git clone --depth 1 https://github.com/microsoft/vcpkg.git
-
-      - name: Bootstrap vcpkg
-        if: runner.os == 'Windows'
-        run: .\vcpkg\bootstrap-vcpkg.bat
-        shell: cmd
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: .\vcpkg\vcpkg.exe install libjpeg-turbo:x64-windows openssl:x64-windows
-        shell: cmd
-
-      - name: Set vcpkg environment variables (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "INCLUDE=${{ github.workspace }}\vcpkg\installed\x64-windows\include" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "LIB=${{ github.workspace }}\vcpkg\installed\x64-windows\lib" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        shell: pwsh
-
-      # ================== LANGKAH BUILD (BERLAKU UNTUK SEMUA OS) ==================
-      # --- [DIPERBAIKI] Ditambahkan 'build' di akhir perintah instalasi ---
       - name: Install Python build tools
         run: python -m pip install --upgrade pip build
         
       - name: Build wheel
+        env:
+          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}/vcpkg
         run: python -m build --wheel
 
       - name: Upload artifacts
