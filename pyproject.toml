@@ -12,7 +12,8 @@ build = "cp311-* cp312-*"
 skip = "*-musllinux* *-win32* pp*"
 
 [tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
 before-build = "yum install -y libjpeg-turbo-devel openssl-devel"
 
 [tool.cibuildwheel.windows]
-before-build = "vcpkg install"
+before-build = "choco install libjpeg-turbo openssl -y --params \"/InstallDir:C:\\deps\""
